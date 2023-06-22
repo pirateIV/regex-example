@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      input {
+        outline: none;
+      }
+      .success {
+        border: 1px solid green;
+      }
+      .error {
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="form">
+      <label for="email">Email:</label>
+      <input type="email" class="input" name="email" id="email" required />
+      <br />
+
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        class="input"
+        name="password"
+        id="password"
+        required
+      />
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="validationMessage"></p>
+
+    <div id="submissionInfo">
+      <!-- <p>Name:</p>
+      <p>Email: </p> -->
+    </div>
+
+    <script>
+      const form = document.querySelector("form");
+      // console.log(form)
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const passwordPattern =
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const inputs = document.querySelectorAll(".input");
+
+      form.addEventListener("submit", validateForm);
+
+      function checkSubmission() {
+        inputs.forEach((input) => {
+          input.addEventListener("input", (e) => {
+            if (input.id === "email" && emailPattern.test(emailInput.value)) {
+              validateMessage("success", "success", "error");
+            } else if (
+              input.id === "password" &&
+              passwordPattern.test(passwordInput.value)
+            ) {
+              validateMessage("success", "success", "error");
+            } else {
+              validateMessage("error", "error", "success");
+            }
+          });
+
+          function validateMessage(text, removed, added) {
+            validationMessage.innerHTML = text;
+            input.classList.remove(added);
+            input.classList.add(removed);
+          }
+        });
+      }
+      checkSubmission();
+
+      function validateForm(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const formObject = Object.fromEntries(formData.entries());
+
+        submissionInfo.innerHTML = `
+          <p>Email: ${formObject.email}</p>
+          <p>Password: ${formObject.password}</p>
+        `;
+        console.log(formObject);
+
+        console.log(e);
+      }
+    </script>
+  </body>
+</html>
