@@ -30,48 +30,6 @@
 
     <div id="validationMessage"></div>
 
-    <script>
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const passwordPattern =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-      const form = document.querySelector("#form");
-
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const emailInput = document.getElementById('email')
-        const passwordInput = document.getElementById('password')
-        const validationMessage = document.getElementById('validationMessage')
-
-        const email = emailInput.value;
-        const password = passwordInput.value
-
-        if (!validateEmail(email)) {
-          validationMessage.innerText = "Invalid email";
-          emailInput.focus();
-          return;
-        }
-        if (!validatePassword(password)) {
-          validationMessage.innerText = "Invalid password";
-          passwordInput.focus();
-          return;
-        }
-         // Submit form using FormData API
-        const formData = new FormData(form);
-        const formObject = Object.fromEntries(formData.entries())
-
-        console.log(formObject)
-        validationMessage.innerText = 'Form submitted successfully'
-      });
-     
-
-      function validateEmail(email) {
-          return emailPattern.test(email)
-      }
-      function validatePassword(password) {
-        return passwordPattern.test(password)
-      }
-
-    </script>
+ 
   </body>
 </html>
